@@ -75,7 +75,7 @@ const WritePage = () => {
             description: description.toString(),
             category,
             image: image,
-            date: format(new Date(), 'dd-MM-yyyy HH:mm:ss')
+            date: format(new Date(), 'yyyy-MM-dd HH:mm:ss')
         };
 
         try {

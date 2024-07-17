@@ -4,6 +4,7 @@ import Menu from "../components/Menu.jsx";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {useAuth} from "../context/AuthContext.jsx";
+import { formatDistanceToNow} from "date-fns";
 
 const SinglePage = () => {
 
@@ -21,22 +22,23 @@ const SinglePage = () => {
                 const response = await axios.get(`http://localhost:3001/api/posts/${postId}`);
                 console.log(response.data)
                 setPost(response.data);
-            }
-            catch (err) {
+            } catch (err) {
                 console.log(err)
             }
         }
         fetchedData();
-    },[postId])
+    }, [postId])
 
     const handleDelete = async () => {
-        try{
+        try {
             await axios.delete(`http://localhost:3001/api/posts/${postId}`);
             navigate('/');
         } catch (err) {
             console.log(err);
         }
     }
+    const postDate = new Date(post.date);
+
 
     return (
         <div className="flex gap-10 px-[6vw] pt-10">
@@ -44,10 +46,10 @@ const SinglePage = () => {
                 <img src={'http://localhost:3001/uploads/' + post?.postImage} alt="" className="h-[300px] w-[300px]"/>
                 <div className="px-10">
                     <div className="flex gap-3">
-                        {post?.userImage && <img src={post.userImage} alt={post.username}/>}
+                        {post?.userImage && <img src={'http://localhost:3001/uploads/' + post.userImage} alt={post.username}/>}
                         <p className="text-lg">{post.username}</p>
                     </div>
-                    <p>{post.date}</p>
+                    <p>{!isNaN(postDate) ? formatDistanceToNow(postDate, {addSuffix: true}) : 'Invalid date'}</p>
                 </div>
                 {currentUser.user === post.username &&
                 <div className="flex gap-5 text-2xl justify-evenly pb-10">
