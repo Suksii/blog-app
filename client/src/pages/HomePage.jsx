@@ -14,6 +14,7 @@ const HomePage = () => {
             try {
                 setLoading(true);
                 const response = await axios.get(`http://localhost:3001/api/posts/${category}`)
+                console.log(response.data)
                 setPosts(response.data);
             }
             catch (err) {
@@ -35,7 +36,7 @@ const HomePage = () => {
                         return (
                             <div key={post.id} className="flex reverse">
                                 <div style={{flex: 1}}>
-                                    <img src={post.photo} alt={post.title} className="w-full object-cover max-h-[300px]"/>
+                                    <img src={'http://localhost:3001/uploads/' + post.image} alt={post.title} className="w-full object-cover max-h-[300px]"/>
                                 </div>
                                 <div style={{flex: 2}}>
                                     <Link to={`/vijest/${post.id}`} className="flex flex-col h-full justify-between items-center px-[5vw] py-5">

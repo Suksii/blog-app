@@ -3,7 +3,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import axios from "axios";
 import {useLocation} from "react-router-dom";
-import moment from "moment";
+import {format} from "date-fns";
 
 const WritePage = () => {
 
@@ -75,7 +75,7 @@ const WritePage = () => {
             description: description.toString(),
             category,
             image: image,
-            date: moment(Date.now()).format("DD-MM-YYYY HH:mm:ss")
+            date: format(new Date(), 'dd-MM-yyyy HH:mm:ss')
         };
 
         try {

@@ -3,7 +3,6 @@ import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import Menu from "../components/Menu.jsx";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import moment from 'moment';
 import {useAuth} from "../context/AuthContext.jsx";
 
 const SinglePage = () => {
@@ -19,8 +18,8 @@ const SinglePage = () => {
     useEffect(() => {
         const fetchedData = async () => {
             try {
-                console.log(postId)
                 const response = await axios.get(`http://localhost:3001/api/posts/${postId}`);
+                console.log(response.data)
                 setPost(response.data);
             }
             catch (err) {
@@ -42,13 +41,13 @@ const SinglePage = () => {
     return (
         <div className="flex gap-10 px-[6vw] pt-10">
             <div style={{flex: 2}}>
-                <img src={post.postImage} alt=""/>
+                <img src={'http://localhost:3001/uploads/' + post?.postImage} alt="" className="h-[300px] w-[300px]"/>
                 <div className="px-10">
                     <div className="flex gap-3">
-                        {post.userImage && <img src={post.userImage} alt={post.username}/>}
+                        {post?.userImage && <img src={post.userImage} alt={post.username}/>}
                         <p className="text-lg">{post.username}</p>
                     </div>
-                    <p>{moment(post.date).fromNow()}</p>
+                    <p>{post.date}</p>
                 </div>
                 {currentUser.user === post.username &&
                 <div className="flex gap-5 text-2xl justify-evenly pb-10">
