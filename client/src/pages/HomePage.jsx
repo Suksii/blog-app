@@ -30,7 +30,7 @@ const HomePage = () => {
 
     return (
         <div className="w-[80%] mx-auto">
-            <div className="mt-10 flex flex-col">
+            <div className="mt-10 flex flex-col itemss">
                 {
                     posts.map((post) => {
                         return (

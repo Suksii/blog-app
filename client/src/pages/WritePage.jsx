@@ -2,7 +2,7 @@ import {useState, useRef} from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import axios from "axios";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {format} from "date-fns";
 
 const WritePage = () => {
@@ -12,7 +12,8 @@ const WritePage = () => {
     const [category, setCategory] = useState(state?.category || '');
     const [description, setDescription] = useState(state?.description || '');
     const [image, setImage] = useState(null);
-    const imgRef = useRef(null)
+    const imgRef = useRef(null);
+    const navigate = useNavigate();
 
     const categories = [
         {
@@ -22,8 +23,8 @@ const WritePage = () => {
         },
         {
             id: 2,
-            name: "Društvo",
-            value: "drustvo"
+            name: "Sport",
+            value: "sport"
         },
         {
             id: 3,
@@ -32,24 +33,14 @@ const WritePage = () => {
         },
         {
             id: 4,
-            name: "Evropska unija",
-            value: "evropska-unija"
+            name: "Svijet",
+            value: "svijet"
         },
         {
             id: 5,
-            name: "Intervju",
-            value: "intervju"
+            name: "Zabava",
+            value: "zabava"
         },
-        {
-            id: 6,
-            name: "Ekologija",
-            value: "ekologija"
-        },
-        {
-            id: 7,
-            name: "Projekti",
-            value: "projekti"
-        }
     ];
 
     const changeImage = () => {
@@ -104,12 +95,18 @@ const WritePage = () => {
             <div style={{flex: 1}} className="flex flex-col gap-4">
                 <div className="border border-gray-300 p-3 gap-2 h-full flex flex-col justify-between" style={{flex: 1}}>
                     <h1 className="text-xl font-semibold mb-2">Postavi</h1>
+                    {image && <img src={`http://localhost:3001/uploads/${image}`} alt="image" className="w-full object-cover"/>}
                         <div className="cursor-pointer font-serif bg-blue-800 rounded-full text-blue-300 border p-1 min-w-[8rem] text-center" onClick={() => imgRef.current.click()}>
+
                             <p>Postavi sliku</p>
                             <input type="file" ref={imgRef} className="hidden" onChange={changeImage}/>
                         </div>
                     <div className="flex justify-between">
-                        <button className="w-full font-serif bg-blue-800 rounded-full text-blue-300 border p-1 min-w-[8rem] text-center" onClick={handleSubmit}>Sačuvaj</button>
+                        <button className="w-full font-serif bg-blue-800 rounded-full text-blue-300 border p-1 min-w-[8rem] text-center"
+                                onClick={() => {
+                                    handleSubmit();
+                                    navigate('/');
+                                }}>Sačuvaj</button>
                     </div>
                 </div>
                 <div className="border border-gray-300 p-3 h-full" style={{flex: 1}}>

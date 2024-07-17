@@ -41,7 +41,7 @@ const SinglePage = () => {
 
 
     return (
-        <div className="flex gap-10 px-[6vw] pt-10">
+        <div className="w-full md:max-w-7xl mx-auto flex flex-col md:flex-row gap-10 pt-10">
             <div style={{flex: 2}}>
                 <img src={'http://localhost:3001/uploads/' + post?.postImage} alt="" className="h-[300px] w-[300px]"/>
                 <div className="px-10">
@@ -62,7 +62,7 @@ const SinglePage = () => {
                 <h1 className="text-4xl font-serif py-5">{post.title}</h1>
                 <p className="text-xl text-justify leading-9 py-5" dangerouslySetInnerHTML={{ __html: post.description }}></p>
             </div>
-            <div style={{flex: 1}}>
+            <div style={{flex: 1}} className="px-4">
                 <Menu category={post.category}/>
             </div>
         </div>
