@@ -33,7 +33,7 @@ const Menu = ({category}) => {
                                 <img src={post.photo} alt={post.title} className="w-[100px] h-[100px] object-cover rounded-lg"/>
                                 <div>
                                     <h1 className="text-xl">{post.title}</h1>
-                                    <p>{post.description}</p>
+                                    <p dangerouslySetInnerHTML={{ __html: post.description }}></p>
                                 </div>
                             </div>
                         )

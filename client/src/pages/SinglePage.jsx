@@ -60,7 +60,7 @@ const SinglePage = () => {
                 </div>
                 }
                 <h1 className="text-4xl font-serif py-5">{post.title}</h1>
-                <p className="text-xl text-justify leading-9 py-5">{post.description}</p>
+                <p className="text-xl text-justify leading-9 py-5" dangerouslySetInnerHTML={{ __html: post.description }}></p>
             </div>
             <div style={{flex: 1}}>
                 <Menu category={post.category}/>

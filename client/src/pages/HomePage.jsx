@@ -41,7 +41,7 @@ const HomePage = () => {
                                 <div style={{flex: 2}}>
                                     <Link to={`/vijest/${post.id}`} className="flex flex-col h-full justify-between items-center px-[5vw] py-5">
                                         <h1 className="text-3xl font-semibold">{post.title}</h1>
-                                        <p className="text-xl">{post.description}</p>
+                                        <p className="text-xl" dangerouslySetInnerHTML={{ __html: post.description }}></p>
                                         <button>Pročitaj još...</button>
                                     </Link>
                                 </div>

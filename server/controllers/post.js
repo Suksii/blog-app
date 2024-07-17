@@ -19,7 +19,7 @@ export const uploadImage = (req, res) => {
 }
 
 export const getPost = (req, res) => {
-    const sql = "SELECT p.id `username`, `description`, p.image AS postImage, u.image AS userImage, `category`, `date` FROM user u JOIN posts p ON u.id=p.uid WHERE p.id = ?"
+    const sql = "SELECT p.id `username`, `description`, p.image AS postImage, u.image AS userImage, u.username, `category`, `date` FROM user u JOIN posts p ON u.id=p.uid WHERE p.id = ?"
      db.query(sql, [req.params.id], (err, result) => {
          if(err)
              return res.status(500).json(err)
@@ -39,7 +39,7 @@ export const addPost = (req, res) => {
         const values = [req.body.title, req.body.description, req.body.image, req.body.category, req.body.date, user.id]
 
         db.query(sql, [values], (err, result) => {
-            if(err) return res.status(500).json(err)
+            if(err) return res.status(500).json('Greška pri dodavanju posta: ' + err)
             return res.json("Vaš post je uspješno dodat!");
         })
     })
