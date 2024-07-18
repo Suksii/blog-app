@@ -8,10 +8,11 @@ import {format} from "date-fns";
 const WritePage = () => {
 
     const state = useLocation().state;
-    const [title, setTitle] = useState(state?.title || '');
+    console.log(state)
+    const [title, setTitle] = useState(state?.postTitle || '');
     const [category, setCategory] = useState(state?.category || '');
     const [description, setDescription] = useState(state?.description || '');
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState(state?.postImage || '');
     const imgRef = useRef(null);
     const navigate = useNavigate();
 
@@ -98,8 +99,7 @@ const WritePage = () => {
                     <h1 className="text-xl font-semibold mb-2">Postavi</h1>
                     {image && <img src={`http://localhost:3001/uploads/${image}`} alt="image" className="w-full object-cover"/>}
                         <div className="cursor-pointer font-serif bg-blue-800 rounded-full text-blue-300 border p-1 min-w-[8rem] text-center" onClick={() => imgRef.current.click()}>
-
-                            <p>Postavi sliku</p>
+                                <p>{state ? 'Promijeni sliku' : 'Postavi sliku'}</p>
                             <input type="file" ref={imgRef} className="hidden" onChange={changeImage}/>
                         </div>
                     <div className="flex justify-between">

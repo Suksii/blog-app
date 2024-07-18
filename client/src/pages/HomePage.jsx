@@ -35,7 +35,7 @@ const HomePage = () => {
                                 </div>
                                 <div style={{flex: 2}} className="p-4">
                                     <Link to={`/vijest/${post.id}`} className="h-full py-5">
-                                        <div className="flex gap-2 items-end mb-4">
+                                        <div className="flex gap-2 items-start mb-4">
                                             <h1 className="text-3xl font-semibold line-clamp-2">{post.title}</h1>
                                             <p className="px-4 py-2 text-center min-w-[100px] rounded-full bg-red-100 text-red-500 uppercase tracking-wider font-semibold text-sm">{post.category}</p>
                                         </div>

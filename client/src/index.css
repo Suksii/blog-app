@@ -10,5 +10,5 @@
 
 .reverse:nth-child(2n+1) {
   flex-direction: row-reverse;
-  background-color: aliceblue;
+  background-color: rgba(255, 0, 0, 0.05);
 }
