@@ -11,7 +11,7 @@ router.get('/', getPosts)
 router.get('/:id', getPost)
 router.post('/add', addPost)
 router.post('/upload',photoUpload.array('photos', 100), uploadImage)
-router.delete('/:id', deletePost)
+router.delete('/delete/:id', deletePost)
 router.put('/', updatePost)
 
 

@@ -4,21 +4,16 @@ import {useNavigate} from "react-router-dom";
 
 const Menu = ({category}) => {
     const [posts, setPosts] = useState([]);
-    const [loading,setLoading] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchedData = async () => {
             try {
-                setLoading(true);
-                const response = await axios.get(`http://localhost:3001/api/posts/?category=${category}`)
+                const response = await axios.get(`/posts/?category=${category}`)
                 setPosts(response.data);
             }
             catch (err) {
                 console.log(err)
-            }
-            finally {
-                setLoading(false);
             }
         }
         fetchedData();
@@ -32,12 +27,12 @@ const Menu = ({category}) => {
                     posts.map((post) => {
                         return (
                             <div key={post.id}
-                                 className={`flex gap-5 px-2 bg-gray-100 h-[120px]  hover:bg-gray-200 rounded-md duration-200 cursor-pointer`}
+                                 className={`flex gap-5 px-2 bg-gray-100 h-[120px] hover:bg-gray-200 rounded-md duration-200 cursor-pointer`}
                                  onClick={() => navigate(`/vijest/${post.id}`)}>
                                 <img src={'http://localhost:3001/uploads/' + post.image} alt={post.title} className="w-[180px] object-cover rounded-lg"/>
                                 <div className="flex flex-col items-start">
-                                    <h1 className="text-xl font-semibold">{post.title}</h1>
-                                    <p className="text-sm" dangerouslySetInnerHTML={{ __html: post.description }}></p>
+                                    <h1 className="text-lg font-semibold line-clamp-1 w-full">{post.title}</h1>
+                                    <p className="text-sm line-clamp-4" dangerouslySetInnerHTML={{ __html: post.description }}></p>
                                 </div>
                             </div>
                         )

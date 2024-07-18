@@ -19,7 +19,7 @@ const SinglePage = () => {
     useEffect(() => {
         const fetchedData = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/api/posts/${postId}`);
+                const response = await axios.get(`/posts/${postId}`);
                 console.log(response.data)
                 setPost(response.data);
             } catch (err) {
@@ -31,7 +31,7 @@ const SinglePage = () => {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:3001/api/posts/${postId}`);
+            await axios.delete(`/posts/delete/${postId}`);
             navigate('/');
         } catch (err) {
             console.log(err);
@@ -39,19 +39,25 @@ const SinglePage = () => {
     }
     const postDate = new Date(post.date);
 
-
     return (
-        <div className="w-full md:max-w-7xl mx-auto flex flex-col md:flex-row gap-10 pt-10">
+        <div className="w-full md:w-[80%] mx-auto flex flex-col md:flex-row gap-10 pt-10">
             <div style={{flex: 2}}>
-                <img src={'http://localhost:3001/uploads/' + post?.postImage} alt="" className="h-[300px] w-[300px]"/>
-                <div className="px-10">
+                <div className="w-fit">
+                <img src={'http://localhost:3001/uploads/' + post?.postImage} alt="" className="h-[500px] w-full"/>
                     <div className="flex gap-3">
-                        {post?.userImage && <img src={'http://localhost:3001/uploads/' + post.userImage} alt={post.username}/>}
-                        <p className="text-lg">{post.username}</p>
+                        <div className="w-full flex justify-between bg-red-100 p-2">
+                            <div className="flex gap-2 items-center">
+                                {post.userImage && <img src={'http://localhost:3001/uploads/' + post?.userImage}
+                                                         alt={post.username}
+                                                         className="w-12 h-12 rounded-full"/>}
+                                <p className="text-md">{post.username}</p>
+                            </div>
+                            <p className="text-sm">{!isNaN(postDate)
+                                ? formatDistanceToNow(postDate, {addSuffix: true}) : 'Invalid date'}</p>
+                        </div>
                     </div>
-                    <p>{!isNaN(postDate) ? formatDistanceToNow(postDate, {addSuffix: true}) : 'Invalid date'}</p>
                 </div>
-                {currentUser.user === post.username &&
+                {currentUser.username === post.username &&
                 <div className="flex gap-5 text-2xl justify-evenly pb-10">
                     <Link to={`/novi-post?edit=${postId}`} state={post}>
                         <FaEdit className="text-gray-900"/>
@@ -59,8 +65,11 @@ const SinglePage = () => {
                     <FaTrashAlt className="text-red-700 cursor-pointer" onClick={handleDelete}/>
                 </div>
                 }
-                <h1 className="text-4xl font-serif py-5">{post.title}</h1>
-                <p className="text-xl text-justify leading-9 py-5" dangerouslySetInnerHTML={{ __html: post.description }}></p>
+                <div className="p-10">
+                    <h1 className="text-2xl">{post.postTitle}</h1>
+                    <p className="text-xl text-justify leading-9 py-5" dangerouslySetInnerHTML={{ __html: post.description }}></p>
+                </div>
+
             </div>
             <div style={{flex: 1}} className="px-4">
                 <Menu category={post.category}/>

@@ -27,7 +27,7 @@ const Navbar = () => {
             link: "/?tema=svijet"
         },
         {
-            id: 6,
+            id: 5,
             name: "Zabava",
             link: "/?tema=zabava"
         }

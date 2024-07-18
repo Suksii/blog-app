@@ -47,7 +47,7 @@ const WritePage = () => {
         const file = imgRef.current.files[0];
         const data = new FormData();
         data.append('photos', file);
-        axios.post("http://localhost:3001/api/posts/upload", data, {
+        axios.post("/posts/upload", data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -62,7 +62,7 @@ const WritePage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const postData = {
-            title,
+            title: title,
             description: description.toString(),
             category,
             image: image,
@@ -71,10 +71,11 @@ const WritePage = () => {
 
         try {
             if (state) {
-                await axios.put(`http://localhost:3001/api/posts/${state.id}`, postData);
+                await axios.put(`/posts/${state.id}`, postData);
             } else {
-                await axios.post(`http://localhost:3001/api/posts/add`, postData);
+                await axios.post(`/posts/add`, postData);
             }
+            navigate('/');
         } catch (err) {
             console.log(err);
         }
@@ -102,11 +103,7 @@ const WritePage = () => {
                             <input type="file" ref={imgRef} className="hidden" onChange={changeImage}/>
                         </div>
                     <div className="flex justify-between">
-                        <button className="w-full font-serif bg-blue-800 rounded-full text-blue-300 border p-1 min-w-[8rem] text-center"
-                                onClick={() => {
-                                    handleSubmit();
-                                    navigate('/');
-                                }}>Sačuvaj</button>
+                        <button className="w-full font-serif bg-blue-800 rounded-full text-blue-300 border p-1 min-w-[8rem] text-center" onClick={handleSubmit}>Sačuvaj</button>
                     </div>
                 </div>
                 <div className="border border-gray-300 p-3 h-full" style={{flex: 1}}>

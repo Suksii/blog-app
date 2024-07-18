@@ -19,7 +19,7 @@ export const uploadImage = (req, res) => {
 }
 
 export const getPost = (req, res) => {
-    const sql = "SELECT p.id `username`, `description`, p.image AS postImage, u.image AS userImage, u.username, `category`, `date` FROM user u JOIN posts p ON u.id=p.uid WHERE p.id = ?"
+    const sql = "SELECT p.id `username`, `description`, p.image AS postImage, p.title AS postTitle, u.id AS userID, u.image AS userImage, u.username, `category`, `date` FROM user u JOIN posts p ON u.id=p.uid WHERE p.id = ?"
      db.query(sql, [req.params.id], (err, result) => {
          if(err)
              return res.status(500).json(err)
@@ -46,10 +46,10 @@ export const addPost = (req, res) => {
 }
 export const deletePost = (req, res) => {
     const token = req.cookies.accessToken;
-    if(token)
+    if(!token)
         return res.status(401).json('Nemate ovlašćenje!')
 
-    jwt.verify(token, 'some_random_key', (err, user) => {
+    jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
         if(err) return res.status(403).json('Nemate ovlašćenje!')
 
         const postId = req.params.id;
@@ -64,10 +64,10 @@ export const deletePost = (req, res) => {
 }
 export const updatePost = (req, res) => {
     const token = req.cookies.accessToken;
-    if(token) return res.status(403).json("Nemate ovlašćenje!");
+    if(!token) return res.status(403).json("Nemate ovlašćenje!");
 
-    jwt.verify(token, 'some_random_key', (err, user) => {
-        if(err) return res.status(403).json('Nemate ovlašćenje!');
+    jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+        if(err) return res.status(403).json('Nemate ovlašćenje!!');
 
         const postId = req.params.id;
         const sql = "UPDATE posts SET `title`= ?, `description`= ? `image`= ?, `category` = ? WHERE `id` = ? AND `uid` = ?"

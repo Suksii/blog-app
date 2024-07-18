@@ -12,6 +12,7 @@ function App() {
     const {currentUser} = useAuth();
 
     axios.defaults.withCredentials = true;
+    axios.defaults.baseURL = 'http://localhost:3001/api';
 
   return (
     <div>
