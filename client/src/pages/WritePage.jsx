@@ -96,15 +96,11 @@ const WritePage = () => {
             </div>
             <div style={{flex: 1}} className="flex flex-col gap-4">
                 <div className="border border-gray-300 p-3 gap-2 h-full flex flex-col justify-between" style={{flex: 1}}>
-                    <h1 className="text-xl font-semibold mb-2">Postavi</h1>
-                    {image && <img src={`http://localhost:3001/uploads/${image}`} alt="image" className="w-full object-cover"/>}
-                        <div className="cursor-pointer font-serif bg-blue-800 rounded-full text-blue-300 border p-1 min-w-[8rem] text-center" onClick={() => imgRef.current.click()}>
+                    {image ? <img src={`http://localhost:3001/uploads/${image}`} alt="image" className="w-full object-cover"/> : <div className="w-full h-[300px] bg-gray-300"/>}
+                        <div className="w-full font-serif bg-red-800 rounded-full text-red-100 border p-1 min-w-[8rem] text-center" onClick={() => imgRef.current.click()}>
                                 <p>{state ? 'Promijeni sliku' : 'Postavi sliku'}</p>
                             <input type="file" ref={imgRef} className="hidden" onChange={changeImage}/>
                         </div>
-                    <div className="flex justify-between">
-                        <button className="w-full font-serif bg-blue-800 rounded-full text-blue-300 border p-1 min-w-[8rem] text-center" onClick={handleSubmit}>Sačuvaj</button>
-                    </div>
                 </div>
                 <div className="border border-gray-300 p-3 h-full" style={{flex: 1}}>
                     <h1 className="text-xl font-semibold mb-2">Kategorije</h1>
@@ -125,6 +121,7 @@ const WritePage = () => {
                         }
                     </ul>
                 </div>
+                <button className="w-full font-serif bg-red-800 rounded-full text-red-100 border p-1 min-w-[8rem] text-center" onClick={handleSubmit}>Sačuvaj</button>
             </div>
         </div>
     );
