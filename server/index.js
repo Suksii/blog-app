@@ -7,6 +7,9 @@ import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import fs from "fs";
+import router from "./routes/posts.js";
+import multer from "multer";
 
 const app = express();
 app.use(express.json());
@@ -25,7 +28,6 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 app.use('/api/posts', postRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
-
 
 
 app.listen(3001, () => {

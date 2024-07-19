@@ -1,6 +1,19 @@
 import {db} from '../db.js';
 import jwt from 'jsonwebtoken';
-import fs from 'fs';
+import fs from "fs";
+
+export const uploadImage = (req, res) => {
+    if(!req.files) return res.status(400).json('Niste dodali sliku!');
+    const {path, originalname} = req.files[0];
+    const extension = originalname.split('.').pop();
+    const newPath = path + '.' + extension;
+    try {
+        fs.renameSync(path, newPath);
+        res.send(newPath.split(`\\`).slice(1));
+    } catch (error) {
+        res.status(500).json('Greška pri uploadu slike: ' + error);
+    }
+}
 export const getPosts = (req, res) => {
     const query = req.query.category ? "SELECT * FROM posts WHERE category = ?" : "SELECT * FROM posts";
     db.query(query, [req.query.category], (err, result) => {
@@ -9,15 +22,6 @@ export const getPosts = (req, res) => {
         return res.status(202).json(result)
     })
 }
-
-export const uploadImage = (req, res) => {
-    const {path, originalname} = req.files[0];
-    const extension = originalname.split('.').pop();
-    const newPath = path + '.' + extension;
-    fs.renameSync(path, newPath);
-    res.send(newPath.split(`\\`).slice(1));
-}
-
 export const getPost = (req, res) => {
     const sql = "SELECT p.id `username`, `description`, p.image AS postImage, p.title AS postTitle, u.id AS userID, u.image AS userImage, u.username, `category`, `date` FROM user u JOIN posts p ON u.id=p.uid WHERE p.id = ?"
      db.query(sql, [req.params.id], (err, result) => {
@@ -70,7 +74,7 @@ export const updatePost = (req, res) => {
         if(err) return res.status(403).json('Nemate ovlašćenje!!');
 
         const postId = req.params.id;
-        const sql = "UPDATE posts SET `title`= ?, `description`= ? `image`= ?, `category` = ? WHERE `id` = ? AND `uid` = ?"
+        const sql = "UPDATE posts SET `title`= ?, `description`= ?, `image`= ?, `category` = ? WHERE `id` = ? AND `uid` = ?"
 
         const values = [ req.body.title, req.body.description, req.body.image, req.body.category]
 

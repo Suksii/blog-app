@@ -47,16 +47,18 @@ const SinglePage = () => {
                 <img src={'http://localhost:3001/uploads/' + post?.postImage} alt="" className="h-[500px] w-full"/>
                     <div className="flex gap-3">
                         <div className="w-full flex justify-between bg-red-100 p-2">
+                            <div className="flex gap-3 items-center">
                                 {post.userImage && <img src={'http://localhost:3001/uploads/' + post?.userImage}
-                                                         alt={post.username}
-                                                         className="w-12 h-12 rounded-full"/>}
-                                <p className="text-md">{post.username}</p>
+                                                        alt={post.username}
+                                                        className="w-20 h-20 rounded-full"/>}
+                                <p className="text-xl">{post.username}</p>
+                            </div>
+
                             <p className="text-sm">{!isNaN(postDate)
                                 ? formatDistanceToNow(postDate, {addSuffix: true}) : 'Invalid date'}</p>
                         </div>
-
                     </div>
-                    <div className="absolute bottom-10 w-full">
+                    <div className="absolute -bottom-10 w-full">
                         {currentUser.username === post.username &&
                             <div className="flex gap-5 text-2xl justify-between">
                                 <Link to={`/novi-post?edit=${postId}`} state={post} className={`bg-red-300 p-2 rounded-full cursor-pointer`}>
@@ -69,7 +71,6 @@ const SinglePage = () => {
                         }
                     </div>
                 </div>
-
                 <div className="p-10">
                     <h1 className="text-2xl">{post.postTitle}</h1>
                     <p className="text-xl text-justify leading-9 py-5" dangerouslySetInnerHTML={{ __html: post.description }}></p>

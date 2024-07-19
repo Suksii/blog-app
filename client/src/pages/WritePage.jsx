@@ -8,7 +8,9 @@ import {format} from "date-fns";
 const WritePage = () => {
 
     const state = useLocation().state;
-    console.log(state)
+
+    const postID = state ? useLocation().search.split('=')[1] : null;
+    console.log(postID)
     const [title, setTitle] = useState(state?.postTitle || '');
     const [category, setCategory] = useState(state?.category || '');
     const [description, setDescription] = useState(state?.description || '');
@@ -63,16 +65,16 @@ const WritePage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const postData = {
-            title: title,
-            description: description.toString(),
+            title,
+            description,
             category,
-            image: image,
+            image,
             date: format(new Date(), 'yyyy-MM-dd HH:mm:ss')
         };
 
         try {
             if (state) {
-                await axios.put(`/posts/${state.id}`, postData);
+                await axios.put(`/posts/update/${postID}`, postData);
             } else {
                 await axios.post(`/posts/add`, postData);
             }
@@ -97,7 +99,7 @@ const WritePage = () => {
             <div style={{flex: 1}} className="flex flex-col gap-4">
                 <div className="border border-gray-300 p-3 gap-2 h-full flex flex-col justify-between" style={{flex: 1}}>
                     {image ? <img src={`http://localhost:3001/uploads/${image}`} alt="image" className="w-full object-cover"/> : <div className="w-full h-[300px] bg-gray-300"/>}
-                        <div className="w-full font-serif bg-red-800 rounded-full text-red-100 border p-1 min-w-[8rem] text-center" onClick={() => imgRef.current.click()}>
+                        <div className="w-full font-serif bg-red-800 rounded-full text-red-100 border p-1 min-w-[8rem] text-center cursor-pointer" onClick={() => imgRef.current.click()}>
                                 <p>{state ? 'Promijeni sliku' : 'Postavi sliku'}</p>
                             <input type="file" ref={imgRef} className="hidden" onChange={changeImage}/>
                         </div>

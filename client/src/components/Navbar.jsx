@@ -1,4 +1,4 @@
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import { BiX, BiMenu } from "react-icons/bi";
 import {useState} from "react";
 import {useAuth} from "../context/AuthContext.jsx";
@@ -36,6 +36,7 @@ const Navbar = () => {
     const [toggle, setToggle] = useState(false);
     const {currentUser, logout} = useAuth();
     const path = useLocation().search.split('=')[1];
+    const navigate = useNavigate();
 
     const scrollOnTop = () => {
         window.scrollTo(0, 0);
@@ -63,14 +64,14 @@ const Navbar = () => {
                             post</h2>
                     </Link>}
                 </div>
-                <p className="text-xl text-red-100 font-serif cursor-pointer">{currentUser?.username}</p>
+                <p className="text-xl text-red-100 font-serif cursor-pointer" onClick={() => navigate(`/profil/${currentUser?.username}`)}>{currentUser?.username}</p>
                 <Link to='/prijava' className="text-xl text-red-100 font-serif cursor-pointer hover:underline" onClick={currentUser ? logout : null}>
                     {currentUser ? 'Logout' : 'Login'}
                 </Link>
             </nav>
     <nav className="flex justify-between lg:hidden items-end bg-red-700 p-2">
         <h1 className="text-2xl font-semibold text-red-100">Logo</h1>
-        <p className="text-lg text-red-100 font-serif cursor-pointer">{currentUser?.username}</p>
+        <p className="text-lg text-red-100 font-serif cursor-pointer" onClick={() => navigate(`/profil/${currentUser?.username}`)}>{currentUser?.username}</p>
         <div className="z-50">
             {toggle ? <BiX className="text-3xl text-red-100 cursor-pointer" onClick={() => setToggle(!toggle)}/> : <BiMenu className="text-3xl text-red-100 cursor-pointer" onClick={() => setToggle(!toggle)}/> }
         </div>

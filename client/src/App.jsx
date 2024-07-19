@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar.jsx";
 import Register from "./pages/RegisterPage.jsx";
 import {useAuth} from "./context/AuthContext.jsx";
 import axios from "axios";
+import ProfilePage from "./pages/ProfilePage.jsx";
 function App() {
 
     const {currentUser} = useAuth();
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/" element={<HomePage/>}/>
                 <Route path="/vijest/:id" element={<SinglePage/>}/>
                 {currentUser && <Route path="/novi-post" element={<WritePage/>}/>}
+                <Route path="/profil/:username" element={<ProfilePage/>}/>
             </Route>
             <Route path="/prijava" element={<LoginPage/>}/>
             <Route path="/registracija" element={<Register/>}/>
