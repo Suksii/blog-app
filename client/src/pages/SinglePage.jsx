@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {useAuth} from "../context/AuthContext.jsx";
 import { formatDistanceToNow} from "date-fns";
+import {Loading} from "../components/Loading.jsx";
 
 const SinglePage = () => {
 
@@ -44,7 +45,7 @@ const SinglePage = () => {
     }
     const postDate = new Date(post.date);
 
-    if(loading) return (<div>Loading...</div>)
+    if(loading) return (<Loading />)
 
     return (
         <div className="w-full md:w-[80%] mx-auto flex flex-col md:flex-row gap-10 pt-10">

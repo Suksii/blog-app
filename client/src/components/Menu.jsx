@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {ButtonLoading, Loading} from "./Loading.jsx";
 
 const Menu = ({category}) => {
     const [posts, setPosts] = useState([]);
@@ -23,7 +24,7 @@ const Menu = ({category}) => {
         fetchedData();
     },[category])
 
-    if(loading) return (<div>Loading...</div>)
+    if(loading) return (<Loading />)
 
     return (
         <>

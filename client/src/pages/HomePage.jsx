@@ -1,6 +1,7 @@
 import {Link, useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {Loading} from "../components/Loading.jsx";
 
 const HomePage = () => {
 
@@ -25,7 +26,7 @@ const HomePage = () => {
         fetchedData();
     },[category])
 
-    if(loading) return (<div>Loading...</div>)
+    if(loading) return (<Loading/>)
 
     return (
         <div className="w-full md:w-[80%] mx-auto">

@@ -4,6 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 import axios from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
 import {format} from "date-fns";
+import {Loading} from "../components/Loading.jsx";
 
 const WritePage = () => {
 
@@ -17,7 +18,8 @@ const WritePage = () => {
     const [image, setImage] = useState(state?.postImage || '');
     const imgRef = useRef(null);
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const [imageLoading, setImageLoading] = useState(false);
 
     const categories = [
         {
@@ -51,7 +53,7 @@ const WritePage = () => {
         const file = imgRef.current.files[0];
         const data = new FormData();
         data.append('photos', file);
-        setLoading(true);
+        setImageLoading(true);
         try {
             const response = await axios.post("/posts/upload", data, {
                 headers: {
@@ -63,7 +65,7 @@ const WritePage = () => {
         } catch (err) {
             console.log(err);
         } finally {
-            setLoading(false);
+            setImageLoading(false);
         }
     }
 
@@ -91,7 +93,7 @@ const WritePage = () => {
         }
     };
 
-    if (loading) return (<div>Loading...</div>)
+    if (loading) return (<Loading/>)
 
     return (
         <div className="w-[90%] md:w-[85%] mx-auto my-10 flex gap-4 flex-col md:flex-row">
@@ -109,7 +111,7 @@ const WritePage = () => {
                 <div className="border border-gray-300 p-3 gap-2 h-full flex flex-col justify-between" style={{flex: 1}}>
                     {image ? <img src={`http://localhost:3001/uploads/${image}`} alt="image" className="w-full object-cover"/> : <div className="w-full h-[300px] bg-gray-300"/>}
                         <div className="w-full font-serif bg-red-800 rounded-full text-red-100 border p-1 min-w-[8rem] text-center cursor-pointer" onClick={() => imgRef.current.click()}>
-                                <p>{state ? 'Promijeni sliku' : 'Postavi sliku'}</p>
+                                <p>{imageLoading ? 'Uploading...' : state ? 'Promijeni sliku' : 'Postavi sliku'}</p>
                             <input type="file" ref={imgRef} className="hidden" onChange={changeImage}/>
                         </div>
                 </div>

@@ -2,19 +2,21 @@ import React, {useRef, useState} from 'react';
 import {useAuth} from "../context/AuthContext.jsx";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {ButtonLoading, Loading} from "../components/Loading.jsx";
 
 const ProfilePage = () => {
 
     const imgRef = useRef(null)
     const {currentUser, setCurrentUser} = useAuth();
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const [imageLoading, setImageLoading] = useState(false);
     console.log(currentUser)
     const handleImageChange = async (e) => {
         const file = e.target.files[0];
         const formData = new FormData();
         formData.append('photos', file);
-        setLoading(true)
+        setImageLoading(true)
         try {
             const response = await axios.post("/posts/upload", formData, {
                 headers: {
@@ -31,7 +33,7 @@ const ProfilePage = () => {
         } catch (error) {
             console.log(error);
         } finally {
-            setLoading(false)
+            setImageLoading(false)
         }
     }
     const handleSubmit = async (e) => {
@@ -52,7 +54,7 @@ const ProfilePage = () => {
         }
     }
 
-    if(loading) return (<div>Loading...</div>)
+    if(loading) return (<Loading/>)
 
     return (
         <div className="h-[100vh] w-full flex justify-center items-center">
@@ -63,8 +65,8 @@ const ProfilePage = () => {
                         src={`http://localhost:3001/uploads/${currentUser.image}` || "https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1"}
                         alt="profile"
                         className="w-32 h-32 rounded-full object-cover my-2"/>
-                    <div className="py-2 mb-4 min-w-[200px] text-center bg-red-700 w-fit text-red-100 rounded-md cursor-pointer" onClick={() => imgRef.current.click()}>
-                        <p>Promijeni sliku</p>
+                    <div className="py-2 mb-4 min-w-[200px] flex justify-center text-center bg-red-700 w-fit text-red-100 rounded-md cursor-pointer" onClick={() => imgRef.current.click()}>
+                        <p>{imageLoading ? <ButtonLoading /> : 'Promijeni sliku'}</p>
                         <input type="file" ref={imgRef} className="hidden" onChange={handleImageChange}/>
                     </div>
                     <div className={`flex flex-col gap-4 w-full`}>

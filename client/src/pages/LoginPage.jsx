@@ -1,6 +1,7 @@
 import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {useAuth} from "../context/AuthContext.jsx";
+import {ButtonLoading} from "../components/Loading.jsx";
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -57,7 +58,7 @@ const Login = () => {
 
                         </div>
                         <div className="flex flex-col py-8 px-5">
-                            <button type="submit" className="py-3 px-2 border border-blue-800 rounded-full uppercase text-lg text-white bg-blue-800 tracking-wider">{loading ? 'Loading...' : 'Prijavi se'}</button>
+                            <button type="submit" className="py-3 px-2 border border-blue-800 text-center flex justify-center rounded-full uppercase text-lg text-white bg-blue-800 tracking-wider">{loading ? <ButtonLoading/> : 'Prijavi se'}</button>
                         </div>
                         {error && <div className="text-red-600 text-center">{error}</div>}
                     </form>

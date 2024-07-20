@@ -1,6 +1,7 @@
 import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import axios from "axios";
+import {ButtonLoading} from "../components/Loading.jsx";
 
 const Register = () => {
 
@@ -76,7 +77,7 @@ const Register = () => {
 
                         </div>
                         <div className="flex flex-col py-8 px-5">
-                            <button type="submit" className="py-3 px-2 border border-blue-800 rounded-full uppercase text-lg text-white bg-blue-800 tracking-wider">{loading ? 'Loading...' : 'Registruj se'}</button>
+                            <button type="submit" className="py-3 px-2 text-center flex justify-center border border-blue-800 rounded-full uppercase text-lg text-white bg-blue-800 tracking-wider">{loading ? <ButtonLoading/> : 'Registruj se'}</button>
                         </div>
                         {passwordMessage && <div className="flex justify-center text-red-500">{passwordMessage}</div>}
                         {error && <div className="flex justify-center text-red-500">{error}</div>}
