@@ -8,26 +8,31 @@ const Navbar = () => {
     const navbarItems = [
         {
             id: 1,
+            name: "Naslovna",
+            link: ""
+        },
+        {
+            id: 2,
             name: "Kultura",
             link: "/?tema=kultura"
         },
         {
-            id: 2,
+            id: 3,
             name: "Sport",
             link: "/?tema=sport"
         },
         {
-            id: 3,
+            id: 4,
             name: "Politika",
             link: "/?tema=politika"
         },
         {
-            id: 4,
+            id: 5,
             name: "Svijet",
             link: "/?tema=svijet"
         },
         {
-            id: 5,
+            id: 6,
             name: "Zabava",
             link: "/?tema=zabava"
         }
@@ -36,6 +41,8 @@ const Navbar = () => {
     const [toggle, setToggle] = useState(false);
     const {currentUser, logout} = useAuth();
     const path = useLocation().search.split('=')[1];
+    const search = window.location.search;
+    console.log("Path ",search)
     const navigate = useNavigate();
 
     const scrollOnTop = () => {
@@ -48,10 +55,11 @@ const Navbar = () => {
                 <div className="flex items-center">
                     {
                         navbarItems.map((item, index) => {
+                            const isActive = path === item.name.toLowerCase() || search === item.link || (item.name === "Naslovna" && search === "");
                             return (
                                 <Link to={item.link}
                                       key={index}
-                                      className={`min-w-[100px] h-full hover:bg-red-200 hover:text-red-700 border-x border-red-700 duration-500 text-center py-3 ${path === item.name.toLowerCase() ? 'bg-red-200 text-red-700' : ' text-red-100'}`}
+                                      className={`min-w-[100px] h-full hover:bg-red-200 hover:text-red-700 border-x border-red-700 duration-500 text-center py-3  ${isActive ? 'bg-red-200 text-red-700' : 'text-red-100'}`}
                                       onClick={scrollOnTop}
                                 >
                                     <h2 className="text-xl font-serif">{item.name}</h2>

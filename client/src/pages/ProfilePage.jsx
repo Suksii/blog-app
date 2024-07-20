@@ -54,11 +54,11 @@ const ProfilePage = () => {
                         src={`http://localhost:3001/uploads/${currentUser.image}` || "https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1"}
                         alt="profile"
                         className="w-32 h-32 rounded-full object-cover my-2"/>
-                    <div className="py-2 min-w-[200px] text-center bg-red-700 w-fit text-red-100 rounded-md cursor-pointer" onClick={() => imgRef.current.click()}>
+                    <div className="py-2 mb-4 min-w-[200px] text-center bg-red-700 w-fit text-red-100 rounded-md cursor-pointer" onClick={() => imgRef.current.click()}>
                         <p>Promijeni sliku</p>
                         <input type="file" ref={imgRef} className="hidden" onChange={handleImageChange}/>
                     </div>
-                    <div className={`flex flex-col gap-2 w-full`}>
+                    <div className={`flex flex-col gap-4 w-full`}>
                         <input value={currentUser.email}
                                className="py-2 w-full px-3"
                                disabled={true}/>
@@ -69,7 +69,7 @@ const ProfilePage = () => {
                                         username: e.target.value}))}
                         />
                     </div>
-                    <button className="w-full py-2 px-3 bg-red-700 text-red-100 rounded-md cursor-pointer" onClick={handleSubmit}>Sačuvaj</button>
+                    <button className="w-full py-2 px-3 bg-red-700 text-red-100 rounded-md cursor-pointer mt-4" onClick={handleSubmit}>Sačuvaj</button>
                 </div>
 
 

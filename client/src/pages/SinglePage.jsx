@@ -13,6 +13,7 @@ const SinglePage = () => {
     const location = useLocation();
     const {currentUser} = useAuth();
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false);
 
     const postId = location.pathname.split('/')[2];
 
@@ -54,8 +55,7 @@ const SinglePage = () => {
                                 <p className="text-xl">{post.username}</p>
                             </div>
 
-                            <p className="text-sm">{!isNaN(postDate)
-                                ? formatDistanceToNow(postDate, {addSuffix: true}) : 'Invalid date'}</p>
+                            <p className="text-sm">{!isNaN(postDate) ? formatDistanceToNow(postDate, {addSuffix: true}) : 'Invalid date'}</p>
                         </div>
                     </div>
                     <div className="absolute -bottom-10 w-full">
