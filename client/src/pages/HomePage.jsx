@@ -5,24 +5,27 @@ import axios from "axios";
 const HomePage = () => {
 
     const [posts, setPosts] = useState([]);
-    const category = useLocation().search.replace('tema', 'category')
-    console.log(category)
+    const category = useLocation().search.replace('tema', 'category');
+    const [loading, setLoading] = useState(false);
 
 
     useEffect(() => {
         const fetchedData = async () => {
+            setLoading(true)
             try {
                 const response = await axios.get(`/posts/${category}`)
-                console.log(response.data)
                 setPosts(response.data);
             }
             catch (err) {
                 console.log(err)
+            } finally {
+                setLoading(false)
             }
         }
         fetchedData();
     },[category])
 
+    if(loading) return (<div>Loading...</div>)
 
     return (
         <div className="w-full md:w-[80%] mx-auto">

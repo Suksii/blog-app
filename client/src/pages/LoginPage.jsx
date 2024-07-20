@@ -9,6 +9,7 @@ const Login = () => {
     })
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     const {login} = useAuth();
     const handleChange = (e) => {
     setFormData(prev => ({...prev, [e.target.name]: e.target.value}))
@@ -17,6 +18,7 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
         try{
             await login(formData)
             navigate('/')
@@ -26,6 +28,8 @@ const Login = () => {
             setTimeout(() => {
                 setError('')
             }, 2000)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -53,7 +57,7 @@ const Login = () => {
 
                         </div>
                         <div className="flex flex-col py-8 px-5">
-                            <button type="submit" className="py-3 px-2 border border-blue-800 rounded-full uppercase text-lg text-white bg-blue-800 tracking-wider">Prijavi se</button>
+                            <button type="submit" className="py-3 px-2 border border-blue-800 rounded-full uppercase text-lg text-white bg-blue-800 tracking-wider">{loading ? 'Loading...' : 'Prijavi se'}</button>
                         </div>
                         {error && <div className="text-red-600 text-center">{error}</div>}
                     </form>

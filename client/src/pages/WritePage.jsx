@@ -17,6 +17,7 @@ const WritePage = () => {
     const [image, setImage] = useState(state?.postImage || '');
     const imgRef = useRef(null);
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false)
 
     const categories = [
         {
@@ -46,20 +47,24 @@ const WritePage = () => {
         },
     ];
 
-    const changeImage = () => {
+    const changeImage = async () => {
         const file = imgRef.current.files[0];
         const data = new FormData();
         data.append('photos', file);
-        axios.post("/posts/upload", data, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }).then(response => {
+        setLoading(true);
+        try {
+            const response = await axios.post("/posts/upload", data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }})
+
             const {data: filename} = response;
             setImage(filename[0]);
-        }).catch(error => {
-            console.log(error);
-        });
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoading(false);
+        }
     }
 
     const handleSubmit = async (e) => {
@@ -71,7 +76,7 @@ const WritePage = () => {
             image,
             date: format(new Date(), 'yyyy-MM-dd HH:mm:ss')
         };
-
+        setLoading(true);
         try {
             if (state) {
                 await axios.put(`/posts/update/${postID}`, postData);
@@ -81,8 +86,12 @@ const WritePage = () => {
             navigate('/');
         } catch (err) {
             console.log(err);
+        } finally {
+            setLoading(false);
         }
     };
+
+    if (loading) return (<div>Loading...</div>)
 
     return (
         <div className="w-[90%] md:w-[85%] mx-auto my-10 flex gap-4 flex-col md:flex-row">

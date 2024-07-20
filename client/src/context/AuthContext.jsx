@@ -8,13 +8,20 @@ export const AuthContextProvider = ({children}) => {
     const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('user') || null))
 
     const login = async (user) => {
-        const response = await axios.post('/auth/login', user)
-        console.log(response)
-        setCurrentUser(response.data)
+        try{
+            const response = await axios.post('/auth/login', user)
+            setCurrentUser(response.data)
+        } catch (err) {
+            console.log(err)
+        }
     }
     const logout = async () => {
-        await axios.post('/auth/logout')
-        setCurrentUser(null)
+        try{
+            await axios.post('/auth/logout')
+            setCurrentUser(null)
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     useEffect(() => {

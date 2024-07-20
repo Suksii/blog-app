@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {useAuth} from "../context/AuthContext.jsx";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
@@ -8,11 +8,13 @@ const ProfilePage = () => {
     const imgRef = useRef(null)
     const {currentUser, setCurrentUser} = useAuth();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false)
     console.log(currentUser)
     const handleImageChange = async (e) => {
         const file = e.target.files[0];
         const formData = new FormData();
         formData.append('photos', file);
+        setLoading(true)
         try {
             const response = await axios.post("/posts/upload", formData, {
                 headers: {
@@ -28,6 +30,8 @@ const ProfilePage = () => {
             }
         } catch (error) {
             console.log(error);
+        } finally {
+            setLoading(false)
         }
     }
     const handleSubmit = async (e) => {
@@ -37,13 +41,18 @@ const ProfilePage = () => {
             email: currentUser.email,
             image: currentUser.image
         }
+        setLoading(true)
         try {
             await axios.put(`/users/update/${currentUser.id}`, user);
             navigate('/')
         } catch (err) {
             console.log(err);
+        } finally {
+            setLoading(false)
         }
     }
+
+    if(loading) return (<div>Loading...</div>)
 
     return (
         <div className="h-[100vh] w-full flex justify-center items-center">

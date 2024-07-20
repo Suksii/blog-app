@@ -5,19 +5,25 @@ import {useNavigate} from "react-router-dom";
 const Menu = ({category}) => {
     const [posts, setPosts] = useState([]);
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         const fetchedData = async () => {
+            setLoading(true)
             try {
                 const response = await axios.get(`/posts/?category=${category}`)
                 setPosts(response.data);
             }
             catch (err) {
                 console.log(err)
+            } finally {
+                setLoading(false)
             }
         }
         fetchedData();
     },[category])
+
+    if(loading) return (<div>Loading...</div>)
 
     return (
         <>

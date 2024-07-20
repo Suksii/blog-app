@@ -20,12 +20,15 @@ const SinglePage = () => {
 
     useEffect(() => {
         const fetchedData = async () => {
+            setLoading(true)
             try {
                 const response = await axios.get(`/posts/${postId}`);
                 console.log(response.data)
                 setPost(response.data);
             } catch (err) {
                 console.log(err)
+            } finally {
+                setLoading(false)
             }
         }
         fetchedData();
@@ -40,6 +43,8 @@ const SinglePage = () => {
         }
     }
     const postDate = new Date(post.date);
+
+    if(loading) return (<div>Loading...</div>)
 
     return (
         <div className="w-full md:w-[80%] mx-auto flex flex-col md:flex-row gap-10 pt-10">

@@ -13,6 +13,7 @@ const Register = () => {
     const [error, setError] = useState('');
     const [passwordMessage, setPasswordMessage] = useState('');
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
 
     const handleChange = (e) => {
@@ -21,6 +22,7 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
         try{
             if(formData.password.length < 6){
                 setPasswordMessage('Šifra mora imati najmanje 6 karaktera')
@@ -37,6 +39,8 @@ const Register = () => {
             setTimeout(() => {
                 setError('')
             }, 2000)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -72,7 +76,7 @@ const Register = () => {
 
                         </div>
                         <div className="flex flex-col py-8 px-5">
-                            <button type="submit" className="py-3 px-2 border border-blue-800 rounded-full uppercase text-lg text-white bg-blue-800 tracking-wider">Registruj se</button>
+                            <button type="submit" className="py-3 px-2 border border-blue-800 rounded-full uppercase text-lg text-white bg-blue-800 tracking-wider">{loading ? 'Loading...' : 'Registruj se'}</button>
                         </div>
                         {passwordMessage && <div className="flex justify-center text-red-500">{passwordMessage}</div>}
                         {error && <div className="flex justify-center text-red-500">{error}</div>}

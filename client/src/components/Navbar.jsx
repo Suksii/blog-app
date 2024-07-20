@@ -42,7 +42,6 @@ const Navbar = () => {
     const {currentUser, logout} = useAuth();
     const path = useLocation().search.split('=')[1];
     const search = window.location.search;
-    console.log("Path ",search)
     const navigate = useNavigate();
 
     const scrollOnTop = () => {
